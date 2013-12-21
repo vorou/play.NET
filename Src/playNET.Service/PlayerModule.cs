@@ -10,7 +10,7 @@ namespace playNET.Service
 
             Post["/play"] = _ =>
                             {
-                                player.Play(null);
+                                player.Play();
                                 return HttpStatusCode.OK;
                             };
         }

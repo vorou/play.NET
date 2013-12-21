@@ -37,7 +37,7 @@ namespace playNET.Tests
 
             sut.Post("/play");
 
-            A.CallTo(() => player.Play(A<IPlaylist>.Ignored)).MustHaveHappened();
+            A.CallTo(() => player.Play()).MustHaveHappened();
         }
     }
 }

@@ -7,23 +7,25 @@ namespace playNET.Tests
 {
     public class PlayerTests
     {
-        private static Player CreateDefaultPlayer()
+        private static Player CreatePlayerWithEmptyPlaylist()
         {
-            return new Player(A.Fake<ISinger>());
+            var playlist = A.Fake<IPlaylist>();
+            A.CallTo(() => playlist.GetTracks()).Returns(Enumerable.Empty<string>());
+            return new Player(A.Fake<ISinger>(), playlist);
         }
 
         private static Player CreatePlayingPlayer(ISinger singer)
         {
-            var sut = new Player(singer);
             var playlist = A.Fake<IPlaylist>();
             A.CallTo(() => playlist.GetTracks()).Returns(new[] {Path.GetRandomFileName()});
-            sut.Play(playlist);
+            var sut = new Player(singer, playlist);
+            sut.Play();
             return sut;
         }
 
         public void Player_ByDefault_Stopped()
         {
-            var sut = CreateDefaultPlayer();
+            var sut = CreatePlayerWithEmptyPlaylist();
 
             var actual = sut.Status;
 
@@ -32,11 +34,9 @@ namespace playNET.Tests
 
         public void Play_NoTracks_RemainsStopped()
         {
-            var playlist = A.Fake<IPlaylist>();
-            A.CallTo(() => playlist.GetTracks()).Returns(Enumerable.Empty<string>());
-            var sut = CreateDefaultPlayer();
+            var sut = CreatePlayerWithEmptyPlaylist();
 
-            sut.Play(playlist);
+            sut.Play();
 
             sut.Status.ShouldBe(PlaybackStatus.Stopped);
         }
@@ -44,23 +44,23 @@ namespace playNET.Tests
         public void Play_OneTrack_PlaysIt()
         {
             var singer = A.Fake<ISinger>();
-            var sut = new Player(singer);
             var playlist = A.Fake<IPlaylist>();
             var track = Path.GetRandomFileName();
             A.CallTo(() => playlist.GetTracks()).Returns(new[] {track});
+            var sut = new Player(singer, playlist);
 
-            sut.Play(playlist);
+            sut.Play();
 
             A.CallTo(() => singer.Sing(track)).MustHaveHappened();
         }
 
         public void Play_TracksExists_StatusChangesToPlaying()
         {
-            var sut = CreateDefaultPlayer();
             var playlist = A.Fake<IPlaylist>();
             A.CallTo(() => playlist.GetTracks()).Returns(new[] {Path.GetRandomFileName()});
+            var sut = new Player(A.Fake<ISinger>(),playlist);
 
-            sut.Play(playlist);
+            sut.Play();
 
             sut.Status.ShouldBe(PlaybackStatus.Playing);
         }

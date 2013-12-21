@@ -4,17 +4,25 @@ namespace playNET
 {
     public class Player : IPlayer
     {
+        private readonly IPlaylist playlist;
         private readonly ISinger singer;
 
-        public Player(ISinger singer)
+        public Player(ISinger singer, IPlaylist playlist)
         {
             this.singer = singer;
+            this.playlist = playlist;
             Status = PlaybackStatus.Stopped;
         }
 
         public PlaybackStatus Status { get; private set; }
 
-        public void Play(IPlaylist playlist)
+        public void Stop()
+        {
+            singer.ShutUp();
+            Status = PlaybackStatus.Stopped;
+        }
+
+        public void Play()
         {
             var tracks = playlist.GetTracks();
             if (!tracks.Any())
@@ -23,12 +31,6 @@ namespace playNET
             var track = tracks.FirstOrDefault();
             singer.Sing(track);
             Status = PlaybackStatus.Playing;
-        }
-
-        public void Stop()
-        {
-            singer.ShutUp();
-            Status = PlaybackStatus.Stopped;
         }
     }
 }
