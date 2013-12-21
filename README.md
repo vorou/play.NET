@@ -4,4 +4,12 @@ I was inspired heavily by [Zach Holman talk](http://vimeo.com/50679241) where he
 
 build
 =====
-run either `psake.ps1` or `psake.cmd`.
+Run either `psake.ps1` or `psake.cmd`.
+
+lovely stuff
+============
+* https://github.com/plioi/fixie
+* https://github.com/psake/psake
+* https://github.com/NancyFx/Nancy
+* https://github.com/FakeItEasy/FakeItEasy
+* https://github.com/shouldly/shouldly
