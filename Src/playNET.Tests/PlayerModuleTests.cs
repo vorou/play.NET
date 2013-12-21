@@ -1,18 +1,28 @@
-﻿using Nancy.Testing;
+﻿using FakeItEasy;
+using Nancy.Testing;
 using playNET.Service;
+using playNET.Tests.Helpers;
 using Shouldly;
 
 namespace playNET.Tests
 {
     public class PlayerModuleTests
     {
-        public void PlayerModule_ByDefault_StatusIsStopped()
+        [Input(PlaybackStatus.Playing, "Playing")]
+        [Input(PlaybackStatus.Stopped, "Stopped")]
+        public void PlayerModule_Always_RespondsWithPlaybackStatus(PlaybackStatus status, string expected)
         {
-            var sut = new Browser(with => with.Module<PlayerModule>());
+            var player = A.Fake<IPlayer>();
+            A.CallTo(() => player.Status).Returns(status);
+            var sut = new Browser(with =>
+                                  {
+                                      with.Module<PlayerModule>();
+                                      with.Dependency(player);
+                                  });
 
             var actual = sut.Get("/").Body.AsString();
 
-            actual.ShouldBe("Stopped");
+            actual.ShouldBe(expected);
         }
     }
 }

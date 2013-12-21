@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace playNET
 {
-    public class Player
+    public class Player : IPlayer
     {
         private readonly ISinger singer;
 

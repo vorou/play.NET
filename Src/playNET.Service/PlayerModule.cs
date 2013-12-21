@@ -4,9 +4,9 @@ namespace playNET.Service
 {
     public class PlayerModule : NancyModule
     {
-        public PlayerModule()
+        public PlayerModule(IPlayer player)
         {
-            Get["/"] = _ => "Stopped";
+            Get["/"] = _ => player.Status.ToString();
         }
     }
 }

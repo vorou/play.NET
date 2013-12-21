@@ -61,6 +61,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Input.cs" />
+    <Compile Include="Helpers\TestConvention.cs" />
     <Compile Include="PlayerModuleTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="PlaylistTests.cs" />

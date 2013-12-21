@@ -43,6 +43,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPlayer.cs" />
     <Compile Include="IPlaylist.cs" />
     <Compile Include="ISinger.cs" />
     <Compile Include="PlaybackStatus.cs" />
