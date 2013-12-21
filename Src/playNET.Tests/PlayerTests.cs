@@ -13,14 +13,4 @@ namespace playNET.Tests
             actual.ShouldBe(PlaybackStatus.Stopped);
         }
     }
-
-    public enum PlaybackStatus
-    {
-        Stopped
-    }
-
-    public class Player
-    {
-        public PlaybackStatus Status { get; private set; }
-    }
 }
