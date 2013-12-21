@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FakeItEasy">
+      <HintPath>..\packages\FakeItEasy.1.15.0\lib\net40\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="Fixie">
       <HintPath>..\packages\Fixie.0.0.1.120\lib\net45\Fixie.dll</HintPath>
     </Reference>

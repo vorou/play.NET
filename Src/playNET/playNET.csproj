@@ -38,6 +38,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPlaylist.cs" />
+    <Compile Include="ISinger.cs" />
     <Compile Include="PlaybackStatus.cs" />
     <Compile Include="Player.cs" />
   </ItemGroup>
