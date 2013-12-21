@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using System.IO;
+using Nancy;
 using Nancy.TinyIoc;
 
 namespace playNET.Service
@@ -9,7 +10,7 @@ namespace playNET.Service
         {
             base.ConfigureApplicationContainer(container);
             container.Register(Singer.Instance);
-            container.Register<IPlaylist>(new Playlist(@"C:\playNET"));
+            container.Register<IPlaylist>(new Playlist(Path.GetTempPath()));
         }
     }
 }
