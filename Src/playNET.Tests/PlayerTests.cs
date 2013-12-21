@@ -32,9 +32,9 @@ namespace playNET.Tests
 
         public void Play_NoTracks_RemainsStopped()
         {
-            var sut = CreateDefaultPlayer();
             var playlist = A.Fake<IPlaylist>();
             A.CallTo(() => playlist.GetTracks()).Returns(Enumerable.Empty<string>());
+            var sut = CreateDefaultPlayer();
 
             sut.Play(playlist);
 
