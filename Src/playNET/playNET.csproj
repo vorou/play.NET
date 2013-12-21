@@ -47,6 +47,7 @@
     <Compile Include="ISinger.cs" />
     <Compile Include="PlaybackStatus.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Playlist.cs" />
     <Compile Include="Singer.cs" />
   </ItemGroup>
   <ItemGroup>

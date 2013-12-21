@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PlayerTests.cs" />
+    <Compile Include="PlaylistTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\playNET\playNET.csproj">
