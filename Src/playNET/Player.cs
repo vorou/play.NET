@@ -28,8 +28,7 @@ namespace playNET
             if (!tracks.Any())
                 return;
 
-            var track = tracks.FirstOrDefault();
-            singer.Sing(track);
+            singer.Sing(tracks);
             Status = PlaybackStatus.Playing;
         }
     }

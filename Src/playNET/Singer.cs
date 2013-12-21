@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using WMPLib;
 
 namespace playNET
@@ -20,9 +22,11 @@ namespace playNET
             }
         }
 
-        public void Sing(string track)
+        public void Sing(IEnumerable<string> tracks)
         {
-            wmp.URL = track;
+            var medias = tracks.Select(t => wmp.newMedia(t));
+            foreach (var media in medias)
+                wmp.currentPlaylist.appendItem(media);
             wmp.controls.play();
         }
 

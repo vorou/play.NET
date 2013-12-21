@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+
 namespace playNET
 {
     public interface ISinger
     {
-        void Sing(string track);
+        void Sing(IEnumerable<string> tracks);
         void ShutUp();
     }
 }

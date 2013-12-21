@@ -32,7 +32,7 @@ namespace playNET.Tests
             actual.ShouldBe(PlaybackStatus.Stopped);
         }
 
-        public void Play_NoTracks_RemainsStopped()
+        public void Play_NoTracksInPlaylist_RemainsStopped()
         {
             var sut = CreatePlayerWithEmptyPlaylist();
 
@@ -41,20 +41,20 @@ namespace playNET.Tests
             sut.Status.ShouldBe(PlaybackStatus.Stopped);
         }
 
-        public void Play_OneTrack_PlaysIt()
+        public void Play_PlaylistHasTracks_PlaysIt()
         {
             var singer = A.Fake<ISinger>();
             var playlist = A.Fake<IPlaylist>();
-            var track = Path.GetRandomFileName();
-            A.CallTo(() => playlist.GetTracks()).Returns(new[] {track});
+            var tracks = new[] {Path.GetRandomFileName()};
+            A.CallTo(() => playlist.GetTracks()).Returns(tracks);
             var sut = new Player(singer, playlist);
 
             sut.Play();
 
-            A.CallTo(() => singer.Sing(track)).MustHaveHappened();
+            A.CallTo(() => singer.Sing(tracks)).MustHaveHappened();
         }
 
-        public void Play_TracksExists_StatusChangesToPlaying()
+        public void Play_PlaylistHasTracks_StatusChangesToPlaying()
         {
             var playlist = A.Fake<IPlaylist>();
             A.CallTo(() => playlist.GetTracks()).Returns(new[] {Path.GetRandomFileName()});
