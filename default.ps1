@@ -9,7 +9,7 @@ Task default -Depends build
 Task build -Depends compile, tests
 
 Task compile {
-    exec { msbuild /v:$verbosity "$solution_dir\playNET.sln" }
+    Exec { msbuild /v:$verbosity "$solution_dir\playNET.sln" }
 }
 
 Task tests -Depends compile {
