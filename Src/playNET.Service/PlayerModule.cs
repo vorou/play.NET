@@ -13,6 +13,12 @@ namespace playNET.Service
                                 player.Play();
                                 return HttpStatusCode.OK;
                             };
+
+            Post["/stop"] = _ =>
+                            {
+                                player.Stop();
+                                return HttpStatusCode.OK;
+                            };
         }
     }
 }

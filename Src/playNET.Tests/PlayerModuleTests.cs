@@ -1,4 +1,5 @@
 ﻿using FakeItEasy;
+using Nancy;
 using Nancy.Testing;
 using playNET.Service;
 using playNET.Tests.Helpers;
@@ -38,6 +39,36 @@ namespace playNET.Tests
             sut.Post("/play");
 
             A.CallTo(() => player.Play()).MustHaveHappened();
+        }
+
+        public void PlayerModule_PostToPlayRoute_Returns200()
+        {
+            var player = A.Fake<IPlayer>();
+            var sut = CreateDefaultBrowser(player);
+
+            var actual = sut.Post("/play").StatusCode;
+
+            actual.ShouldBe(HttpStatusCode.OK);
+        }
+
+        public void PlayerModule_PostToStopRoute_StopsPlayback()
+        {
+            var player = A.Fake<IPlayer>();
+            var sut = CreateDefaultBrowser(player);
+
+            sut.Post("/stop");
+
+            A.CallTo(() => player.Stop()).MustHaveHappened();
+        }
+
+        public void PlayerModule_PostToStopRoute_Returns200()
+        {
+            var player = A.Fake<IPlayer>();
+            var sut = CreateDefaultBrowser(player);
+
+            var actual = sut.Post("/stop").StatusCode;
+
+            actual.ShouldBe(HttpStatusCode.OK);
         }
     }
 }
