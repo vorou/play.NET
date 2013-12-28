@@ -87,7 +87,7 @@ function Invoke-Task
                         Assert ((test-path "variable:$variable") -and ((get-variable $variable).Value -ne $null)) ($msgs.required_variable_not_set -f $variable, $taskName)
                     }
 
-                    InvokeWithRetries $task.Action `
+                    Exec $task.Action `
                         -maxRetries               $task.MaxRetries `
                         -retryTriggerErrorPattern $task.RetryTriggerErrorPattern
 
@@ -129,7 +129,7 @@ function Invoke-Task
 }
 
 # .ExternalHelp  psake.psm1-help.xml
-function InvokeWithRetries 
+function Exec
 {
     [CmdletBinding()]
     param(
@@ -142,8 +142,12 @@ function InvokeWithRetries
     $tryCount = 1
 
     do {
-        try { 
+        try {
+            $global:lastexitcode = 0                 
             & $cmd
+            if ($lastexitcode -ne 0) {
+                throw ("Exec: " + $errorMessage)
+            }
             break
         }
         catch [Exception]
@@ -168,20 +172,6 @@ function InvokeWithRetries
         }
     }
     while ($true)
-}
-
-# .ExternalHelp psake.psm1-help.xml
-function Exec
-{
-    [CmdletBinding()]
-    param(
-        [Parameter(Position=0,Mandatory=1)][scriptblock]$cmd,
-        [Parameter(Position=1,Mandatory=0)][string]$errorMessage = ($msgs.error_bad_command -f $cmd)
-    )
-    & $cmd
-    if ($lastexitcode -ne 0) {
-        throw ("Exec: " + $errorMessage)
-    }
 }
 
 # .ExternalHelp  psake.psm1-help.xml
@@ -831,7 +821,7 @@ convertfrom-stringdata @'
 import-localizeddata -bindingvariable msgs -erroraction silentlycontinue
 
 $script:psake = @{}
-$psake.version = "4.3.0" # contains the current version of psake
+$psake.version = "4.3.1" # contains the current version of psake
 $psake.context = new-object system.collections.stack # holds onto the current state of all variables
 $psake.run_by_psake_build_tester = $false # indicates that build is being run by psake-BuildTester
 $psake.config_default = new-object psobject -property @{
@@ -850,4 +840,4 @@ $psake.build_script_dir = "" # contains a string with fully-qualified path to cu
 
 LoadConfiguration
 
-export-modulemember -function Invoke-psake, Invoke-Task, Task, Properties, Include, FormatTaskName, TaskSetup, TaskTearDown, Framework, Assert, InvokeWithRetries, Exec -variable psake
+export-modulemember -function Invoke-psake, Invoke-Task, Task, Properties, Include, FormatTaskName, TaskSetup, TaskTearDown, Framework, Assert, Exec -variable psake
