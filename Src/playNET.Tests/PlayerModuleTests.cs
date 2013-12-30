@@ -26,7 +26,7 @@ namespace playNET.Tests
             A.CallTo(() => player.Status).Returns(status);
             var sut = CreateDefaultBrowser(player);
 
-            var actual = sut.Get("/").Body.AsString();
+            var actual = sut.Get("/status").Body.AsString();
 
             actual.ShouldBe(expected);
         }
