@@ -63,7 +63,7 @@ namespace playNET.Tests
         public void Play_PlaylistHasTracks_StatusChangesToPlaying()
         {
             var playlist = fixture.Freeze<IPlaylist>();
-            A.CallTo(() => playlist.GetTracks()).Returns(new[] {Path.GetRandomFileName()});
+            A.CallTo(() => playlist.GetTracks()).Returns(fixture.CreateMany<string>());
             var sut = fixture.Create<Player>();
 
             sut.Play();
