@@ -18,6 +18,15 @@ namespace playNET.Tests
                                });
         }
 
+        public void PlayerModule_GetToRoot_ReturnsOK()
+        {
+            var sut = CreateDefaultBrowser(A.Fake<IPlayer>());
+
+            var actual = sut.Get("/").StatusCode;
+
+            actual.ShouldBe(HttpStatusCode.OK);
+        }
+
         [Input(PlaybackStatus.Playing, "Playing")]
         [Input(PlaybackStatus.Stopped, "Stopped")]
         public void PlayerModule_Always_RespondsWithPlaybackStatus(PlaybackStatus status, string expected)

@@ -6,6 +6,8 @@ namespace playNET.Service
     {
         public PlayerModule(IPlayer player)
         {
+            Get["/"] = _ => View["index.html"];
+
             Get["/status"] = _ => player.Status.ToString();
 
             Post["/play"] = _ =>
