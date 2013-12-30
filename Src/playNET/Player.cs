@@ -14,8 +14,17 @@ namespace playNET
             Status = PlaybackStatus.Stopped;
         }
 
+        public string NowPlaying
+        {
+            get
+            {
+                if (Status == PlaybackStatus.Stopped)
+                    return null;
+                return singer.NowPlaying;
+            }
+        }
+
         public PlaybackStatus Status { get; private set; }
-        public string NowPlaying { get; private set; }
 
         public void Stop()
         {

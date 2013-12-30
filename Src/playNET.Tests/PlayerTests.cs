@@ -96,5 +96,15 @@ namespace playNET.Tests
 
             sut.NowPlaying.ShouldBe(null);
         }
+
+        public void NowPlaying_StatusIsPlaying_AsksSingerWhatIsPlaying()
+        {
+            var singer = fixture.Freeze<ISinger>();
+            var sut = CreatePlayingPlayer();
+            var nowPlaying = fixture.Create<string>();
+            A.CallTo(() => singer.NowPlaying).Returns(nowPlaying);
+
+            sut.NowPlaying.ShouldBe(nowPlaying);
+        }
     }
 }

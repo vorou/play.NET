@@ -73,6 +73,7 @@
     <Compile Include="PlayerModuleTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="PlaylistTests.cs" />
+    <Compile Include="SingerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\playNET.Service\playNET.Service.csproj">

@@ -21,6 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{64CE3FEE
 		..\default.ps1 = ..\default.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{10FC1D4F-C625-4728-8E93-11037A0C8C9F}"
+	ProjectSection(SolutionItems) = preProject
+		..\Audio\vot-tak-vot.mp3 = ..\Audio\vot-tak-vot.mp3
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

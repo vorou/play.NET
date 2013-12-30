@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WMPLib;
 
 namespace playNET
 {
+    /// <summary>
+    /// Talks to a real player.
+    /// </summary>
     public class Singer : ISinger
     {
         private static readonly ISinger instance = new Singer();
@@ -24,7 +28,7 @@ namespace playNET
 
         public void Sing(IEnumerable<string> tracks)
         {
-            var medias = tracks.Select(t => wmp.newMedia(t));
+            var medias = tracks.Select(Path.GetFullPath).Select(t => wmp.newMedia(t));
             foreach (var media in medias)
                 wmp.currentPlaylist.appendItem(media);
             wmp.controls.play();
@@ -33,6 +37,14 @@ namespace playNET
         public void ShutUp()
         {
             wmp.controls.stop();
+        }
+
+        public string NowPlaying
+        {
+            get
+            {
+                return wmp.currentMedia.getItemInfo("Title");
+            }
         }
     }
 }
