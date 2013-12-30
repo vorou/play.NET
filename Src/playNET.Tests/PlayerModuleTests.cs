@@ -27,6 +27,19 @@ namespace playNET.Tests
             actual.ShouldBe(HttpStatusCode.OK);
         }
 
+        public void PlayerModule_Playing_ResponseContainsTrackName()
+        {
+            var player = A.Fake<IPlayer>();
+            A.CallTo(() => player.Status).Returns(PlaybackStatus.Playing);
+            var trackName = "panda rap";
+            A.CallTo(() => player.NowPlaying).Returns(trackName);
+            var sut = CreateDefaultBrowser(player);
+
+            var actual = sut.Get("/").Body.AsString();
+
+            actual.ShouldContain(trackName);
+        }
+
         [Input(PlaybackStatus.Playing, "Playing")]
         [Input(PlaybackStatus.Stopped, "Stopped")]
         public void PlayerModule_Always_RespondsWithPlaybackStatus(PlaybackStatus status, string expected)
