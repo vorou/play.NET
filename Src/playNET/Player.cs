@@ -15,6 +15,7 @@ namespace playNET
         }
 
         public PlaybackStatus Status { get; private set; }
+        public string NowPlaying { get; private set; }
 
         public void Stop()
         {

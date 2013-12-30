@@ -1,31 +1,37 @@
 ﻿using System.IO;
 using System.Linq;
 using FakeItEasy;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoFakeItEasy;
 using Shouldly;
 
 namespace playNET.Tests
 {
     public class PlayerTests
     {
-        private static Player CreatePlayerWithEmptyPlaylist()
+        private readonly IFixture fixture = new Fixture().Customize(new AutoFakeItEasyCustomization());
+
+        private Player CreatePlayerWithEmptyPlaylist()
         {
-            var playlist = A.Fake<IPlaylist>();
+            var playlist = fixture.Freeze<IPlaylist>();
             A.CallTo(() => playlist.GetTracks()).Returns(Enumerable.Empty<string>());
-            return new Player(A.Fake<ISinger>(), playlist);
+            return fixture.Create<Player>();
         }
 
-        private static Player CreatePlayingPlayer(ISinger singer)
+        private Player CreatePlayingPlayer()
         {
-            var playlist = A.Fake<IPlaylist>();
+            var playlist = fixture.Freeze<IPlaylist>();
             A.CallTo(() => playlist.GetTracks()).Returns(new[] {Path.GetRandomFileName()});
-            var sut = new Player(singer, playlist);
+            var sut = fixture.Create<Player>();
+
             sut.Play();
+
             return sut;
         }
 
         public void Player_ByDefault_Stopped()
         {
-            var sut = CreatePlayerWithEmptyPlaylist();
+            var sut = fixture.Create<Player>();
 
             var actual = sut.Status;
 
@@ -43,11 +49,11 @@ namespace playNET.Tests
 
         public void Play_PlaylistHasTracks_PlaysIt()
         {
-            var singer = A.Fake<ISinger>();
-            var playlist = A.Fake<IPlaylist>();
+            var singer = fixture.Freeze<ISinger>();
+            var playlist = fixture.Freeze<IPlaylist>();
             var tracks = new[] {Path.GetRandomFileName()};
             A.CallTo(() => playlist.GetTracks()).Returns(tracks);
-            var sut = new Player(singer, playlist);
+            var sut = fixture.Freeze<Player>();
 
             sut.Play();
 
@@ -56,9 +62,9 @@ namespace playNET.Tests
 
         public void Play_PlaylistHasTracks_StatusChangesToPlaying()
         {
-            var playlist = A.Fake<IPlaylist>();
+            var playlist = fixture.Freeze<IPlaylist>();
             A.CallTo(() => playlist.GetTracks()).Returns(new[] {Path.GetRandomFileName()});
-            var sut = new Player(A.Fake<ISinger>(),playlist);
+            var sut = fixture.Create<Player>();
 
             sut.Play();
 
@@ -67,8 +73,8 @@ namespace playNET.Tests
 
         public void Stop_WasPlaying_StopsPlayback()
         {
-            var singer = A.Fake<ISinger>();
-            var sut = CreatePlayingPlayer(singer);
+            var singer = fixture.Freeze<ISinger>();
+            var sut = CreatePlayingPlayer();
 
             sut.Stop();
 
@@ -77,12 +83,18 @@ namespace playNET.Tests
 
         public void Stop_WasPlaying_StatusChangesToStopped()
         {
-            var singer = A.Fake<ISinger>();
-            var sut = CreatePlayingPlayer(singer);
+            var sut = CreatePlayingPlayer();
 
             sut.Stop();
 
             sut.Status.ShouldBe(PlaybackStatus.Stopped);
+        }
+
+        public void NowPlaying_PlayerStopped_ReturnsNull()
+        {
+            var sut = fixture.Create<Player>();
+
+            sut.NowPlaying.ShouldBe(null);
         }
     }
 }
