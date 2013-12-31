@@ -6,8 +6,11 @@ build
 =====
 Run either `psake.ps1` or `psake.cmd`.
 
-lovely stuff
-============
+hi-tech
+=======
+
+The app itself is completely useless yet, but here's the stuff I've managed to apply already:
+
 * https://github.com/plioi/fixie
 * https://github.com/psake/psake
 * https://github.com/NancyFx/Nancy
