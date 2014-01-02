@@ -34,10 +34,23 @@
         <div class="starter-template">
             <h1>@Model</h1>
             <p class="lead">now playing</p>
+            <button type="button" class="btn btn-default btn-lg" id="play">play</button>
+            <button type="button" class="btn btn-default btn-lg" id="stop">stop</button>
         </div>
 
     </div><!-- /.container -->
+
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+            $("#play").click(function () {
+                $.post("play");
+            });
+            $("#stop").click(function () {
+                $.post("stop");
+            });
+        });
+    </script>
     <script src="../Content/js/bootstrap.min.js"></script>
 </body>
 </html>
