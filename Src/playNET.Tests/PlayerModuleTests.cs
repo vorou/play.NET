@@ -1,7 +1,7 @@
 ﻿using FakeItEasy;
 using Nancy;
 using Nancy.Testing;
-using playNET.Service;
+using playNET.MVC;
 using playNET.Tests.Helpers;
 using Shouldly;
 

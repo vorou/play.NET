@@ -2,7 +2,7 @@
 using Nancy;
 using Nancy.TinyIoc;
 
-namespace playNET.Service
+namespace playNET.MVC
 {
     public class Bootstrapper : DefaultNancyBootstrapper
     {

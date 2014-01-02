@@ -76,9 +76,9 @@
     <Compile Include="SingerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\playNET.Service\playNET.Service.csproj">
-      <Project>{49D192AA-32AE-4056-BF2D-E78EDCA30CDA}</Project>
-      <Name>playNET.Service</Name>
+    <ProjectReference Include="..\playNET.App\playNET.App.csproj">
+      <Project>{A843018E-17B2-480C-AFAE-C7090764C791}</Project>
+      <Name>playNET.App</Name>
     </ProjectReference>
     <ProjectReference Include="..\playNET\playNET.csproj">
       <Project>{B3592AFB-571E-44F5-9712-D9635BD0C068}</Project>
