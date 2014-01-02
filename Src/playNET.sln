@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{10FC1D4F
 		..\Audio\vot-tak-vot.mp3 = ..\Audio\vot-tak-vot.mp3
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "playNET.MVC", "playNET.MVC\playNET.MVC.csproj", "{A843018E-17B2-480C-AFAE-C7090764C791}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "playNET.App", "playNET.App\playNET.App.csproj", "{A843018E-17B2-480C-AFAE-C7090764C791}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
