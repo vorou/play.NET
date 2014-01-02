@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{10FC1D4F
 		..\Audio\vot-tak-vot.mp3 = ..\Audio\vot-tak-vot.mp3
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "playNET.MVC", "playNET.MVC\playNET.MVC.csproj", "{A843018E-17B2-480C-AFAE-C7090764C791}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{49D192AA-32AE-4056-BF2D-E78EDCA30CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49D192AA-32AE-4056-BF2D-E78EDCA30CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49D192AA-32AE-4056-BF2D-E78EDCA30CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A843018E-17B2-480C-AFAE-C7090764C791}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A843018E-17B2-480C-AFAE-C7090764C791}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A843018E-17B2-480C-AFAE-C7090764C791}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A843018E-17B2-480C-AFAE-C7090764C791}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
