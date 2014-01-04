@@ -1,4 +1,4 @@
-Properties {
+properties {
     $verbosity = "minimal"
     $sln_dir = ".\Src"
     $sln = "$sln_dir\playNET.sln"
@@ -8,18 +8,20 @@ Properties {
     $test_dll = "$sln_dir\playNET.Tests\bin\Debug\playNET.Tests.dll" 
 }
 
-Task default -Depends build
+task default -depends build
 
-Task build -Depends compile_sln, run_tests
+task build -depends compile_sln, run_tests
 
-Task compile_sln {
-    Exec { & $msbuild /v:$verbosity $sln }
+task compile_sln {
+    exec { & $msbuild /v:$verbosity $sln }
 }
 
-Task compile_tests {
-    Exec { & $msbuild /v:$verbosity $test_proj }
+task compile_tests {
+    exec { & $msbuild /v:$verbosity $test_proj }
 }
 
-Task run_tests -Depends compile_tests {
-    Exec { & $test_runner $test_dll }
+task run_tests -depends compile_tests {
+    exec { & $test_runner $test_dll }
 }
+
+
