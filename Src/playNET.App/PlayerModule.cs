@@ -1,6 +1,6 @@
 ﻿using Nancy;
 
-namespace playNET.MVC
+namespace playNET.App
 {
     public class PlayerModule : NancyModule
     {
