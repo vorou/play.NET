@@ -20,24 +20,21 @@ namespace playNET.Tests
                 Directory.Delete(targetDirectory, true);
         }
 
-        private static void CreateEmptyFile(string path)
+        private static string CreateEmptyFile(string targetDirectory, string extension)
         {
+            var path = Path.Combine(targetDirectory, Path.ChangeExtension(Path.GetRandomFileName(), extension));
             File.WriteAllBytes(path, new byte[0]);
+            return path;
         }
 
-        public void Playlist_DirectoryEmpty_ReturnsNoTracks()
+        public void Playlist_NoMp3sInDir_ThrowsInCtor()
         {
-            var sut = new Playlist(targetDirectory);
-
-            var actual = sut.GetTracks();
-
-            actual.ShouldBeEmpty();
+            Should.Throw<FileNotFoundException>(() => new Playlist(targetDirectory));
         }
 
         public void Playlist_OneMp3File_ReturnsIt()
         {
-            var pathToMp3 = Path.Combine(targetDirectory, Path.ChangeExtension(Path.GetRandomFileName(), ".mp3"));
-            CreateEmptyFile(pathToMp3);
+            var pathToMp3 = CreateEmptyFile(targetDirectory, ".mp3");
             var sut = new Playlist(targetDirectory);
 
             var actual = sut.GetTracks();
@@ -47,8 +44,8 @@ namespace playNET.Tests
 
         public void Playlist_FileWithUnknownExtension_IgnoresIt()
         {
-            var pathToUnknownFile = Path.Combine(targetDirectory, Path.GetRandomFileName());
-            CreateEmptyFile(pathToUnknownFile);
+            CreateEmptyFile(targetDirectory, ".mp3");
+            var pathToUnknownFile = CreateEmptyFile(targetDirectory, ".xyz");
             var sut = new Playlist(targetDirectory);
 
             var actual = sut.GetTracks();
