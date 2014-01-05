@@ -1,23 +1,24 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace playNET
 {
     public class Player : IPlayer
     {
-        private readonly IPlaylist playlist;
+        private IFileLocator fileLocator;
         private readonly ISinger singer;
 
-        public Player(ISinger singer, IPlaylist playlist)
+        public Player(IFileLocator fileLocator, ISinger singer)
         {
+            this.fileLocator = fileLocator;
             this.singer = singer;
-            this.playlist = playlist;
         }
 
-        public IPlaylist Playlist
+        public IEnumerable<string> Playlist
         {
             get
             {
-                return playlist;
+                return fileLocator.FindAll();
             }
         }
 
@@ -44,7 +45,7 @@ namespace playNET
 
         public void Play()
         {
-            var tracks = playlist.GetTracks();
+            var tracks = fileLocator.FindAll();
             if (!tracks.Any())
                 return;
 

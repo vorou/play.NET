@@ -1,5 +1,4 @@
-﻿using System.IO;
-using FakeItEasy;
+﻿using FakeItEasy;
 using playNET.Tests.Helpers;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoFakeItEasy;
@@ -26,11 +25,11 @@ namespace playNET.Tests
 
         public void Play_Always_SendsTracksFromPlaylistToSinger()
         {
+            var fileLocator = fixture.Freeze<IFileLocator>();
+            var tracks = fixture.CreateMany<string>();
+            A.CallTo(() => fileLocator.FindAll()).Returns(tracks);
             var singer = fixture.Freeze<ISinger>();
-            var playlist = fixture.Freeze<IPlaylist>();
-            var tracks = new[] {Path.GetRandomFileName()};
-            A.CallTo(() => playlist.GetTracks()).Returns(tracks);
-            var sut = fixture.Freeze<Player>();
+            var sut = fixture.Create<Player>();
 
             sut.Play();
 
@@ -59,14 +58,16 @@ namespace playNET.Tests
             actual.ShouldBe(nowPlaying);
         }
 
-        public void Playlist_Always_ReturnsInternalPlaylist()
+        public void Playlist_Always_ReturnsAllTracksFromFileLocator()
         {
-            var playlist = fixture.Freeze<IPlaylist>();
+            var fileLocator = fixture.Freeze<IFileLocator>();
+            var tracks = fixture.CreateMany<string>();
+            A.CallTo(() => fileLocator.FindAll()).Returns(tracks);
             var sut = fixture.Create<Player>();
 
             var actual = sut.Playlist;
 
-            actual.ShouldBeSameAs(playlist);
+            actual.ShouldBeSameAs(tracks);
         }
     }
 }
