@@ -24,7 +24,7 @@ namespace playNET.Tests
             actual.ShouldBe(expected);
         }
 
-        public void Play_PlaylistHasTracks_PlaysIt()
+        public void Play_Always_SendsTracksFromPlaylistToSinger()
         {
             var singer = fixture.Freeze<ISinger>();
             var playlist = fixture.Freeze<IPlaylist>();
