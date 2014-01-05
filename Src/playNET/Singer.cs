@@ -43,7 +43,11 @@ namespace playNET
         {
             get
             {
-                return wmp.currentMedia.getItemInfo("Title");
+                var currentMedia = wmp.currentMedia;
+                if (currentMedia == null)
+                    return null;
+
+                return currentMedia.getItemInfo("Title");
             }
         }
     }
