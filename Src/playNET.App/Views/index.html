@@ -32,10 +32,13 @@
     <div class="container">
 
         <div class="starter-template">
-            <h1>@Model</h1>
+            <h1>@Model.NowPlaying</h1>
             <p class="lead">now playing</p>
             <button type="button" class="btn btn-default btn-lg" id="play">play</button>
             <button type="button" class="btn btn-default btn-lg" id="stop">stop</button>
+            @Each.Playlist
+                <p>@Current</p>
+            @EndEach
         </div>
 
     </div><!-- /.container -->

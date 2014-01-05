@@ -1,14 +1,18 @@
-﻿using FakeItEasy;
+﻿using System.Linq;
+using FakeItEasy;
 using Nancy;
 using Nancy.Testing;
 using playNET.App;
 using playNET.Tests.Helpers;
+using Ploeh.AutoFixture;
 using Shouldly;
 
 namespace playNET.Tests
 {
     public class PlayerModuleTests
     {
+        private readonly IFixture fixture = new Fixture();
+
         private static Browser CreateDefaultBrowser(IPlayer player)
         {
             return new Browser(with =>
@@ -27,7 +31,7 @@ namespace playNET.Tests
             actual.ShouldBe(HttpStatusCode.OK);
         }
 
-        public void GetRoot_PlayerIsPlaying_ResponseContainsTrackName()
+        public void GetRoot_Always_ContainsTrackName()
         {
             var player = A.Fake<IPlayer>();
             A.CallTo(() => player.Status).Returns(PlaybackStatus.Playing);
@@ -51,6 +55,19 @@ namespace playNET.Tests
             var actual = sut.Get("/status").Body.AsString();
 
             actual.ShouldBe(expected);
+        }
+
+        public void GetRoot_Always_ContainsPlaylist()
+        {
+            var player = A.Fake<IPlayer>();
+            var tracks = fixture.CreateMany<string>(2);
+            A.CallTo(() => player.Playlist).Returns(tracks);
+            var sut = CreateDefaultBrowser(player);
+
+            var actual = sut.Get("/").Body.AsString();
+
+            actual.ShouldContain(tracks.ElementAt(0));
+            actual.ShouldContain(tracks.ElementAt(1));
         }
 
         public void PostPlay_Always_StartsPlayback()

@@ -95,6 +95,7 @@
   <ItemGroup />
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="IndexViewModel.cs" />
     <Compile Include="PlayerModule.cs" />
   </ItemGroup>
   <ItemGroup>
