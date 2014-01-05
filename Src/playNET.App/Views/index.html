@@ -36,9 +36,11 @@
             <p class="lead">now playing</p>
             <button type="button" class="btn btn-default btn-lg" id="play">play</button>
             <button type="button" class="btn btn-default btn-lg" id="stop">stop</button>
-            @Each.Playlist
-                <p>@Current</p>
-            @EndEach
+            <table class="table table-striped playlist">
+                @Each.Playlist
+                <tr><td>@Current</td></tr>
+                @EndEach
+            </table>
         </div>
 
     </div><!-- /.container -->
