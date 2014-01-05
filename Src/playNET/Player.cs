@@ -11,25 +11,27 @@ namespace playNET
         {
             this.singer = singer;
             this.playlist = playlist;
-            Status = PlaybackStatus.Stopped;
         }
 
         public string NowPlaying
         {
             get
             {
-                if (Status == PlaybackStatus.Stopped)
-                    return null;
                 return singer.NowPlaying;
             }
         }
 
-        public PlaybackStatus Status { get; private set; }
+        public PlaybackStatus Status
+        {
+            get
+            {
+                return singer.NowPlaying == null ? PlaybackStatus.Stopped : PlaybackStatus.Playing;
+            }
+        }
 
         public void Stop()
         {
             singer.ShutUp();
-            Status = PlaybackStatus.Stopped;
         }
 
         public void Play()
@@ -39,7 +41,6 @@ namespace playNET
                 return;
 
             singer.Sing(tracks);
-            Status = PlaybackStatus.Playing;
         }
     }
 }
