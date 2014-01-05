@@ -28,7 +28,7 @@ namespace playNET.Tests
         {
             var fileLocator = fixture.Freeze<IFileLocator>();
             var tracks = fixture.CreateMany<string>();
-            A.CallTo(() => fileLocator.FindAll()).Returns(tracks);
+            A.CallTo(() => fileLocator.FindTracks()).Returns(tracks);
             var singer = fixture.Freeze<ISinger>();
             var sut = fixture.Create<Player>();
 
@@ -40,7 +40,7 @@ namespace playNET.Tests
         public void Play_NoTracks_DoesntCallSinger()
         {
             var fileLocator = fixture.Freeze<IFileLocator>();
-            A.CallTo(() => fileLocator.FindAll()).Returns(Enumerable.Empty<string>());
+            A.CallTo(() => fileLocator.FindTracks()).Returns(Enumerable.Empty<string>());
             var singer = fixture.Freeze<ISinger>();
             var sut = fixture.Create<Player>();
 
@@ -75,7 +75,7 @@ namespace playNET.Tests
         {
             var fileLocator = fixture.Freeze<IFileLocator>();
             var tracks = fixture.CreateMany<string>();
-            A.CallTo(() => fileLocator.FindAll()).Returns(tracks);
+            A.CallTo(() => fileLocator.FindTracks()).Returns(tracks);
             var sut = fixture.Create<Player>();
 
             var actual = sut.Playlist;

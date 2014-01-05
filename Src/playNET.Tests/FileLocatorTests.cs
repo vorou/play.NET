@@ -4,11 +4,11 @@ using Shouldly;
 
 namespace playNET.Tests
 {
-    public class PlaylistTests : IDisposable
+    public class FileLocatorTests : IDisposable
     {
         private readonly string targetDirectory;
 
-        public PlaylistTests()
+        public FileLocatorTests()
         {
             targetDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(targetDirectory);
@@ -29,15 +29,15 @@ namespace playNET.Tests
 
         public void Playlist_NoMp3sInDir_ThrowsInCtor()
         {
-            Should.Throw<FileNotFoundException>(() => new Playlist(targetDirectory));
+            Should.Throw<FileNotFoundException>(() => new FileLocator(targetDirectory));
         }
 
         public void Playlist_OneMp3File_ReturnsIt()
         {
             var pathToMp3 = CreateEmptyFile(targetDirectory, ".mp3");
-            var sut = new Playlist(targetDirectory);
+            var sut = new FileLocator(targetDirectory);
 
-            var actual = sut.GetTracks();
+            var actual = sut.FindTracks();
 
             actual.ShouldContain(pathToMp3);
         }
@@ -46,9 +46,9 @@ namespace playNET.Tests
         {
             CreateEmptyFile(targetDirectory, ".mp3");
             var pathToUnknownFile = CreateEmptyFile(targetDirectory, ".xyz");
-            var sut = new Playlist(targetDirectory);
+            var sut = new FileLocator(targetDirectory);
 
-            var actual = sut.GetTracks();
+            var actual = sut.FindTracks();
 
             actual.ShouldNotContain(pathToUnknownFile);
         }

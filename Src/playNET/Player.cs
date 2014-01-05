@@ -5,7 +5,7 @@ namespace playNET
 {
     public class Player : IPlayer
     {
-        private IFileLocator fileLocator;
+        private readonly IFileLocator fileLocator;
         private readonly ISinger singer;
 
         public Player(IFileLocator fileLocator, ISinger singer)
@@ -18,7 +18,7 @@ namespace playNET
         {
             get
             {
-                return fileLocator.FindAll();
+                return fileLocator.FindTracks();
             }
         }
 
@@ -45,7 +45,7 @@ namespace playNET
 
         public void Play()
         {
-            var tracks = fileLocator.FindAll();
+            var tracks = fileLocator.FindTracks();
             if (!tracks.Any())
                 return;
 

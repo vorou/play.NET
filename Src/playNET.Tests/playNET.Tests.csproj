@@ -72,7 +72,7 @@
     <Compile Include="Helpers\TestConvention.cs" />
     <Compile Include="PlayerModuleTests.cs" />
     <Compile Include="PlayerTests.cs" />
-    <Compile Include="PlaylistTests.cs" />
+    <Compile Include="FileLocatorTests.cs" />
     <Compile Include="SingerTests.cs" />
   </ItemGroup>
   <ItemGroup>

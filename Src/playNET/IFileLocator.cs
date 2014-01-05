@@ -4,6 +4,6 @@ namespace playNET
 {
     public interface IFileLocator
     {
-        IEnumerable<string> FindAll();
+        IEnumerable<string> FindTracks();
     }
 }

@@ -10,7 +10,7 @@ namespace playNET.App
         {
             base.ConfigureApplicationContainer(container);
             container.Register(Singer.Instance);
-            container.Register<IPlaylist>(new Playlist(Path.GetTempPath()));
+            container.Register<IFileLocator>(new FileLocator(Path.GetTempPath()));
         }
     }
 }
