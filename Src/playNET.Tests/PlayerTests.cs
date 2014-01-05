@@ -11,17 +11,6 @@ namespace playNET.Tests
     {
         private readonly IFixture fixture = new Fixture().Customize(new AutoFakeItEasyCustomization());
 
-        private Player CreatePlayingPlayer()
-        {
-            var playlist = fixture.Freeze<IPlaylist>();
-            A.CallTo(() => playlist.GetTracks()).Returns(new[] {Path.GetRandomFileName()});
-            var sut = fixture.Create<Player>();
-
-            sut.Play();
-
-            return sut;
-        }
-
         [Input("panda", PlaybackStatus.Playing)]
         [Input(null, PlaybackStatus.Stopped)]
         public void Player_Always_CalculatesStatusFromNowPlaying(string nowPlaying, PlaybackStatus expected)
@@ -48,10 +37,10 @@ namespace playNET.Tests
             A.CallTo(() => singer.Sing(tracks)).MustHaveHappened();
         }
 
-        public void Stop_WasPlaying_StopsPlayback()
+        public void Stop_Always_StopsPlayback()
         {
             var singer = fixture.Freeze<ISinger>();
-            var sut = CreatePlayingPlayer();
+            var sut = fixture.Create<Player>();
 
             sut.Stop();
 
@@ -61,7 +50,7 @@ namespace playNET.Tests
         public void NowPlaying_Always_AsksSingerWhatIsPlaying()
         {
             var singer = fixture.Freeze<ISinger>();
-            var sut = CreatePlayingPlayer();
+            var sut = fixture.Create<Player>();
             var nowPlaying = fixture.Create<string>();
             A.CallTo(() => singer.NowPlaying).Returns(nowPlaying);
 
