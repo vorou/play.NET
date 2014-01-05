@@ -1,3 +1,5 @@
+import-module webadministration
+
 properties {
     $app_name = "playnet"
     $verbosity = "minimal"
@@ -44,7 +46,7 @@ task configure_iis {
    }
    $phys_path = "c:\inetpub\wwwroot\$app_name"
    if(-not(test-path $phys_path)) {
-       new-webapppool $app_name
+       mkdir $phys_path
    }
    if(-not(test-path "iis:\sites\$app_name")) {
        new-website $app_name -physicalpath $phys_path -applicationpool $app_name
