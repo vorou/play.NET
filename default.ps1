@@ -1,4 +1,5 @@
 properties {
+    $app_name = "playnet"
     $verbosity = "minimal"
     $sln_dir = ".\Src"
     $sln = "$sln_dir\playNET.sln"
@@ -31,4 +32,21 @@ task package {
         "/p:DeployOnBuild=true;" +
         "PublishProfile=CreatePackage"
     exec { & $msbuild $msbuild_settings $web_deploy_settings $app_proj }
+}
+
+task publish -depends package, configure_iis {
+    exec { & ".\Bin\playNET.App.deploy.cmd" "/y" }
+}
+
+task configure_iis {
+   if(-not(test-path "iis:\apppools\$app_name")) {
+       new-webapppool $app_name
+   }
+   $phys_path = "c:\inetpub\wwwroot\$app_name"
+   if(-not(test-path $phys_path)) {
+       new-webapppool $app_name
+   }
+   if(-not(test-path "iis:\sites\$app_name")) {
+       new-website $app_name -physicalpath $phys_path -applicationpool $app_name
+   }
 }
