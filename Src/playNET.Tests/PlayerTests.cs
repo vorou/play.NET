@@ -13,7 +13,7 @@ namespace playNET.Tests
 
         [Input("panda", PlaybackStatus.Playing)]
         [Input(null, PlaybackStatus.Stopped)]
-        public void Player_Always_CalculatesStatusFromNowPlaying(string nowPlaying, PlaybackStatus expected)
+        public void Status_Always_CalculatedFromNowPlaying(string nowPlaying, PlaybackStatus expected)
         {
             var singer = fixture.Freeze<ISinger>();
             var sut = fixture.Create<Player>();
