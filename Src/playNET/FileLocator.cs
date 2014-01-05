@@ -11,7 +11,7 @@ namespace playNET
         public FileLocator(string directory)
         {
             if (!Directory.EnumerateFiles(directory, "*.mp3").Any())
-                throw new FileNotFoundException();
+                throw new FileNotFoundException("Directory contains no mp3s: " + directory);
             this.directory = directory;
         }
 
