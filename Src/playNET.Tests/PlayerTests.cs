@@ -1,4 +1,5 @@
-﻿using FakeItEasy;
+﻿using System.Linq;
+using FakeItEasy;
 using playNET.Tests.Helpers;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoFakeItEasy;
@@ -23,7 +24,7 @@ namespace playNET.Tests
             actual.ShouldBe(expected);
         }
 
-        public void Play_Always_SendsTracksFromPlaylistToSinger()
+        public void Play_TracksExists_SendsToSinger()
         {
             var fileLocator = fixture.Freeze<IFileLocator>();
             var tracks = fixture.CreateMany<string>();
@@ -34,6 +35,18 @@ namespace playNET.Tests
             sut.Play();
 
             A.CallTo(() => singer.Sing(tracks)).MustHaveHappened();
+        }
+
+        public void Play_NoTracks_DoesntCallSinger()
+        {
+            var fileLocator = fixture.Freeze<IFileLocator>();
+            A.CallTo(() => fileLocator.FindAll()).Returns(Enumerable.Empty<string>());
+            var singer = fixture.Freeze<ISinger>();
+            var sut = fixture.Create<Player>();
+
+            sut.Play();
+
+            A.CallTo(singer).MustNotHaveHappened();
         }
 
         public void Stop_Always_StopsPlayback()
