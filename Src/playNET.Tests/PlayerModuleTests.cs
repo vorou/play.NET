@@ -18,7 +18,7 @@ namespace playNET.Tests
                                });
         }
 
-        public void PlayerModule_GetToRoot_ReturnsOK()
+        public void GetRoot_Always_ReturnsHttpOK()
         {
             var sut = CreateDefaultBrowser(A.Fake<IPlayer>());
 
@@ -27,7 +27,7 @@ namespace playNET.Tests
             actual.ShouldBe(HttpStatusCode.OK);
         }
 
-        public void PlayerModule_Playing_ResponseContainsTrackName()
+        public void GetRoot_PlayerIsPlaying_ResponseContainsTrackName()
         {
             var player = A.Fake<IPlayer>();
             A.CallTo(() => player.Status).Returns(PlaybackStatus.Playing);
@@ -42,7 +42,7 @@ namespace playNET.Tests
 
         [Input(PlaybackStatus.Playing, "Playing")]
         [Input(PlaybackStatus.Stopped, "Stopped")]
-        public void PlayerModule_Always_RespondsWithPlaybackStatus(PlaybackStatus status, string expected)
+        public void GetStatus_Always_RespondsWithPlaybackStatus(PlaybackStatus status, string expected)
         {
             var player = A.Fake<IPlayer>();
             A.CallTo(() => player.Status).Returns(status);
@@ -53,7 +53,7 @@ namespace playNET.Tests
             actual.ShouldBe(expected);
         }
 
-        public void PlayerModule_PostToPlayRoute_StartsPlayback()
+        public void PostPlay_Always_StartsPlayback()
         {
             var player = A.Fake<IPlayer>();
             var sut = CreateDefaultBrowser(player);
@@ -63,7 +63,7 @@ namespace playNET.Tests
             A.CallTo(() => player.Play()).MustHaveHappened();
         }
 
-        public void PlayerModule_PostToPlayRoute_Returns200()
+        public void PostPlay_Always_ReturnsHttpOK()
         {
             var player = A.Fake<IPlayer>();
             var sut = CreateDefaultBrowser(player);
@@ -73,7 +73,7 @@ namespace playNET.Tests
             actual.ShouldBe(HttpStatusCode.OK);
         }
 
-        public void PlayerModule_PostToStopRoute_StopsPlayback()
+        public void PostStop_Always_StopsPlayback()
         {
             var player = A.Fake<IPlayer>();
             var sut = CreateDefaultBrowser(player);
@@ -83,7 +83,7 @@ namespace playNET.Tests
             A.CallTo(() => player.Stop()).MustHaveHappened();
         }
 
-        public void PlayerModule_PostToStopRoute_Returns200()
+        public void PostStop_Always_ReturnsHttpOK()
         {
             var player = A.Fake<IPlayer>();
             var sut = CreateDefaultBrowser(player);
