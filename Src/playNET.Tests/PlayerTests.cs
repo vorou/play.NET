@@ -71,16 +71,17 @@ namespace playNET.Tests
             actual.ShouldBe(nowPlaying);
         }
 
-        public void Playlist_Always_ReturnsAllTracksFromFileLocator()
+        public void Playlist_Always_LeavesOnlyFileNames()
         {
             var fileLocator = fixture.Freeze<IFileLocator>();
-            var tracks = fixture.CreateMany<string>();
+            var fullPath = @"C:\bears\panda.xyz";
+            var tracks = new[] {fullPath};
             A.CallTo(() => fileLocator.FindTracks()).Returns(tracks);
             var sut = fixture.Create<Player>();
 
             var actual = sut.Playlist;
 
-            actual.ShouldBeSameAs(tracks);
+            actual.ShouldContain("panda");
         }
     }
 }

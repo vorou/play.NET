@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace playNET
@@ -18,7 +19,7 @@ namespace playNET
         {
             get
             {
-                return fileLocator.FindTracks();
+                return fileLocator.FindTracks().Select(Path.GetFileNameWithoutExtension);
             }
         }
 
