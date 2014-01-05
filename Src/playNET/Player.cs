@@ -13,6 +13,14 @@ namespace playNET
             this.playlist = playlist;
         }
 
+        public IPlaylist Playlist
+        {
+            get
+            {
+                return playlist;
+            }
+        }
+
         public string NowPlaying
         {
             get

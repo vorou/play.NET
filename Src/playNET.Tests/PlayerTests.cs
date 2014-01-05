@@ -69,5 +69,15 @@ namespace playNET.Tests
 
             actual.ShouldBe(nowPlaying);
         }
+
+        public void Playlist_Always_ReturnsInternalPlaylist()
+        {
+            var playlist = fixture.Freeze<IPlaylist>();
+            var sut = fixture.Create<Player>();
+
+            var actual = sut.Playlist;
+
+            actual.ShouldBeSameAs(playlist);
+        }
     }
 }
