@@ -1,3 +1,10 @@
+trap
+{
+    write-output $_
+    ##teamcity[buildStatus status='FAILURE' ]
+    exit 1
+}
+
 # Helper script for those who want to run psake without importing the module.
 # Example:
 # .\psake.ps1 "default.ps1" "BuildHelloWord" "4.0" 
