@@ -1,3 +1,10 @@
+trap
+{
+    write-output $_
+    ##teamcity[buildStatus status='FAILURE' ]
+    exit 1
+}
+
 import-module webadministration
 
 properties {
