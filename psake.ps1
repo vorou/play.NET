@@ -1,10 +1,3 @@
-trap
-{
-    write-output $_
-    ##teamcity[buildStatus status='FAILURE' ]
-    exit 1
-}
-
 # Helper script for those who want to run psake without importing the module.
 # Example:
 # .\psake.ps1 "default.ps1" "BuildHelloWord" "4.0" 
@@ -34,6 +27,13 @@ param(
     [Parameter(Position=9, Mandatory=0)]
     [string]$scriptPath
 )
+trap
+{
+    write-output $_
+    ##teamcity[buildStatus status='FAILURE' ]
+    exit 1
+}
+
 if (!$scriptPath) {
   $scriptPath = $(Split-Path -parent $MyInvocation.MyCommand.path)
 }
