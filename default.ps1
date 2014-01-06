@@ -39,6 +39,7 @@ task package {
 
 task publish -depends package, configure_iis {
     exec { & ".\Bin\playNET.App.deploy.cmd" "/y" }
+    invoke-webrequest http://localhost:$app_port
 }
 
 task configure_iis {
