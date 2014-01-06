@@ -2,6 +2,7 @@ import-module webadministration
 
 properties {
     $app_name = "playnet"
+    $app_port = "8000"
     $verbosity = "minimal"
     $sln_dir = ".\Src"
     $sln = "$sln_dir\playNET.sln"
@@ -42,13 +43,15 @@ task publish -depends package, configure_iis {
 
 task configure_iis {
    if(-not(test-path "iis:\apppools\$app_name")) {
-       new-webapppool $app_name
+       $pool = new-webapppool $app_name
+       $pool.processModel.identityType = 'LocalSystem'
+       $pool | Set-Item
    }
    $phys_path = "c:\inetpub\wwwroot\$app_name"
    if(-not(test-path $phys_path)) {
        mkdir $phys_path
    }
    if(-not(test-path "iis:\sites\$app_name")) {
-       new-website $app_name -physicalpath $phys_path -applicationpool $app_name
+       new-website $app_name -physicalpath $phys_path -applicationpool $app_name -port $app_port
    }
 }
