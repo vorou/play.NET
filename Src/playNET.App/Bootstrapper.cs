@@ -9,6 +9,7 @@ namespace playNET.App
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
+            container.Register<Player>().AsSingleton();
             container.Register<Singer>().AsSingleton();
             container.Register(new FileLocator(Path.GetTempPath())).AsSingleton();
         }
