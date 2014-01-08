@@ -12,7 +12,7 @@ namespace playNET
         public Player(IFileLocator fileLocator, ISinger singer)
         {
             this.fileLocator = fileLocator;
-            fileLocator.TrackAdded += FileLocatorOnTrackAdded;
+            this.fileLocator.TrackAdded += FileLocatorOnTrackAdded;
             this.singer = singer;
         }
 
@@ -25,7 +25,7 @@ namespace playNET
         {
             get
             {
-                return fileLocator.FindTracks().Select(Path.GetFileNameWithoutExtension);
+                return singer.Playlist;
             }
         }
 

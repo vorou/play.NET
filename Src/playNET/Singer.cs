@@ -50,6 +50,7 @@ namespace playNET
                 return currentMedia.getItemInfo("Title");
             }
         }
+        public IEnumerable<string> Playlist { get; private set; }
 
         public void Queue(string track)
         {

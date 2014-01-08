@@ -72,17 +72,16 @@ namespace playNET.Tests
             actual.ShouldBe(nowPlaying);
         }
 
-        public void Playlist_Always_LeavesOnlyFileNames()
+        public void Playlist_Always_PassesThroughSingersPlaylist()
         {
-            var fileLocator = fixture.Freeze<IFileLocator>();
-            var fullPath = @"C:\bears\panda.xyz";
-            var tracks = new[] {fullPath};
-            A.CallTo(() => fileLocator.FindTracks()).Returns(tracks);
+            var singer = fixture.Freeze<ISinger>();
+            var playlist = fixture.CreateMany<string>();
+            A.CallTo(() => singer.Playlist).Returns(playlist);
             var sut = fixture.Create<Player>();
 
             var actual = sut.Playlist;
 
-            actual.ShouldContain("panda");
+            actual.ShouldBeSameAs(playlist);
         }
 
         public void Player_TrackAdded_ShouldQueueIt()
