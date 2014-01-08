@@ -5,7 +5,6 @@ namespace playNET
 {
     public class FileLocator : IFileLocator
     {
-        private static IFileLocator instance;
         private readonly FileSystemWatcher watcher;
 
         public FileLocator(string directory)
