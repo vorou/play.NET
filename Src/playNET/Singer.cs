@@ -10,20 +10,11 @@ namespace playNET
     /// </summary>
     public class Singer : ISinger
     {
-        private static readonly ISinger instance = new Singer();
         private readonly WindowsMediaPlayer wmp;
 
-        private Singer()
+        public Singer()
         {
             wmp = new WindowsMediaPlayer();
-        }
-
-        public static ISinger Instance
-        {
-            get
-            {
-                return instance;
-            }
         }
 
         public void Sing(IEnumerable<string> tracks)

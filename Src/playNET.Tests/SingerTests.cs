@@ -9,21 +9,28 @@ namespace playNET.Tests
 
         public void NowPlaying_NothingPlaying_ReturnsNull()
         {
-            Singer.Instance.ShutUp();
+            var sut = CreateSinger();
+            sut.ShutUp();
 
-            var actual = Singer.Instance.NowPlaying;
+            var actual = sut.NowPlaying;
 
             actual.ShouldBe(null);
         }
 
         public void NowPlaying_MediaIsPlaying_ReturnsFilenameWithoutExtension()
         {
+            var sut = new Singer();
             var track = Path.Combine(audioDir, "vot-tak-vot.mp3");
-            Singer.Instance.Sing(new[] {track});
+            sut.Sing(new[] {track});
 
-            var actual = Singer.Instance.NowPlaying;
+            var actual = sut.NowPlaying;
 
             actual.ShouldBe("vot-tak-vot");
+        }
+
+        private static Singer CreateSinger()
+        {
+            return new Singer();
         }
     }
 }
