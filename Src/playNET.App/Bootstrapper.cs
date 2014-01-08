@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using System.IO;
+using Nancy;
 using Nancy.TinyIoc;
 
 namespace playNET.App
@@ -9,7 +10,7 @@ namespace playNET.App
         {
             base.ConfigureApplicationContainer(container);
             container.Register<Player>().AsSingleton();
-            container.Register<IFileLocator>(new FileLocator(@"C:\playNET"));
+            container.Register<IFileLocator>(new FileLocator(Path.GetTempPath()));
         }
     }
 }

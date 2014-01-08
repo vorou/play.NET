@@ -15,7 +15,8 @@ namespace playNET
 
         public IEnumerable<string> FindTracks()
         {
-            return Directory.GetFiles(watcher.Path, "*.mp3");
+            var tracks = Directory.GetFiles(watcher.Path, "*.mp3");
+            return tracks;
         }
 
         public event FileSystemEventHandler TrackAdded

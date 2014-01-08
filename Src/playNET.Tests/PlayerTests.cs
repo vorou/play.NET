@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using FakeItEasy;
 using playNET.Tests.Helpers;
 using Ploeh.AutoFixture;
@@ -25,29 +24,14 @@ namespace playNET.Tests
             actual.ShouldBe(expected);
         }
 
-        public void Play_TracksExists_SendsToSinger()
+        public void Play_Always_TurnsOnSinger()
         {
-            var fileLocator = fixture.Freeze<IFileLocator>();
-            var tracks = fixture.CreateMany<string>();
-            A.CallTo(() => fileLocator.FindTracks()).Returns(tracks);
             var singer = fixture.Freeze<ISinger>();
             var sut = fixture.Create<Player>();
 
             sut.Play();
 
-            A.CallTo(() => singer.Sing(tracks)).MustHaveHappened();
-        }
-
-        public void Play_NoTracks_DoesntCallSinger()
-        {
-            var fileLocator = fixture.Freeze<IFileLocator>();
-            A.CallTo(() => fileLocator.FindTracks()).Returns(Enumerable.Empty<string>());
-            var singer = fixture.Freeze<ISinger>();
-            var sut = fixture.Create<Player>();
-
-            sut.Play();
-
-            A.CallTo(singer).MustNotHaveHappened();
+            A.CallTo(() => singer.Sing()).MustHaveHappened();
         }
 
         public void Stop_Always_StopsPlayback()
@@ -96,6 +80,18 @@ namespace playNET.Tests
 
             var expected = @"a:\b";
             A.CallTo(() => singer.Queue(expected)).MustHaveHappened();
+        }
+
+        public void Player_Always_QueuesExistingTracks()
+        {
+            var singer = fixture.Freeze<ISinger>();
+            var fileLocator = fixture.Freeze<IFileLocator>();
+            var track = fixture.Create<string>();
+            A.CallTo(() => fileLocator.FindTracks()).Returns(new[] {track});
+
+            fixture.Create<Player>();
+
+            A.CallTo(() => singer.Queue(track)).MustHaveHappened();
         }
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using WMPLib;
 
 namespace playNET
@@ -17,14 +16,6 @@ namespace playNET
             wmp = new WindowsMediaPlayer();
         }
 
-        public void Sing(IEnumerable<string> tracks)
-        {
-            var medias = tracks.Select(Path.GetFullPath).Select(t => wmp.newMedia(t));
-            foreach (var media in medias)
-                wmp.currentPlaylist.appendItem(media);
-            wmp.controls.play();
-        }
-
         public void ShutUp()
         {
             wmp.controls.stop();
@@ -34,6 +25,9 @@ namespace playNET
         {
             get
             {
+                if (wmp.playState != WMPPlayState.wmppsPlaying)
+                    return null;
+
                 var currentMedia = wmp.currentMedia;
                 if (currentMedia == null)
                     return null;
@@ -41,10 +35,24 @@ namespace playNET
                 return currentMedia.getItemInfo("Title");
             }
         }
-        public IEnumerable<string> Playlist { get; private set; }
+
+        public IEnumerable<string> Playlist
+        {
+            get
+            {
+                for (var i = 0; i < wmp.currentPlaylist.count; i++)
+                    yield return wmp.currentPlaylist.Item[i].name;
+            }
+        }
 
         public void Queue(string track)
         {
+            wmp.currentPlaylist.appendItem(wmp.newMedia(Path.GetFullPath(track)));
+        }
+
+        public void Sing()
+        {
+            wmp.controls.play();
         }
     }
 }
