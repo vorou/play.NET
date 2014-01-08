@@ -1,25 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace playNET
 {
     public class FileLocator : IFileLocator
     {
-        private readonly string directory;
+        private static IFileLocator instance;
+        private readonly FileSystemWatcher watcher;
 
         public FileLocator(string directory)
         {
-            if (!Directory.EnumerateFiles(directory, "*.mp3").Any())
-                throw new FileNotFoundException("Directory contains no mp3s: " + directory);
-            this.directory = directory;
+            watcher = new FileSystemWatcher(directory) {EnableRaisingEvents = true};
         }
 
         public IEnumerable<string> FindTracks()
         {
-            return Directory.GetFiles(directory, "*.mp3");
+            return Directory.GetFiles(watcher.Path, "*.mp3");
         }
 
-        public event FileSystemEventHandler TrackAdded;
+        public event FileSystemEventHandler TrackAdded
+        {
+            add
+            {
+                watcher.Created += value;
+            }
+            remove
+            {
+            }
+        }
     }
 }

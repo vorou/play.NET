@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using Shouldly;
 
 namespace playNET.Tests
@@ -20,37 +21,75 @@ namespace playNET.Tests
                 Directory.Delete(targetDirectory, true);
         }
 
-        private static string CreateEmptyFile(string targetDirectory, string extension)
+        public void FindTracks_NoMp3sInDir_ReturnsEmpty()
         {
-            var path = Path.Combine(targetDirectory, Path.ChangeExtension(Path.GetRandomFileName(), extension));
-            File.WriteAllBytes(path, new byte[0]);
-            return path;
+            var sut = CreateFileLocator(targetDirectory);
+
+            var actual = sut.FindTracks();
+
+            actual.ShouldBeEmpty();
         }
 
-        public void Playlist_NoMp3sInDir_ThrowsInCtor()
-        {
-            Should.Throw<FileNotFoundException>(() => new FileLocator(targetDirectory));
-        }
-
-        public void Playlist_OneMp3File_ReturnsIt()
+        public void FindTracks_OneMp3File_ReturnsIt()
         {
             var pathToMp3 = CreateEmptyFile(targetDirectory, ".mp3");
-            var sut = new FileLocator(targetDirectory);
+            var sut = CreateFileLocator(targetDirectory);
 
             var actual = sut.FindTracks();
 
             actual.ShouldContain(pathToMp3);
         }
 
-        public void Playlist_FileWithUnknownExtension_IgnoresIt()
+        public void FindTracks_FileWithUnknownExtension_IgnoresIt()
         {
             CreateEmptyFile(targetDirectory, ".mp3");
             var pathToUnknownFile = CreateEmptyFile(targetDirectory, ".xyz");
-            var sut = new FileLocator(targetDirectory);
+            var sut = CreateFileLocator(targetDirectory);
 
             var actual = sut.FindTracks();
 
             actual.ShouldNotContain(pathToUnknownFile);
+        }
+
+        public void FileLocator_NewMp3Created_RaisesNewTrack()
+        {
+            var pathToMp3 = CreateRandomFilePath(targetDirectory, ".mp3");
+            var sut = CreateFileLocator(targetDirectory);
+            var signal = new ManualResetEventSlim();
+            sut.TrackAdded += (sender, args) =>
+                              {
+                                  args.FullPath.ShouldBe(pathToMp3);
+                                  signal.Set();
+                              };
+
+            CreateEmptyFile(pathToMp3);
+
+            signal.Wait(500);
+            if(!signal.IsSet)
+                throw new Exception("Timeout");
+            //todo: wait for reply on https://github.com/plioi/fixie/issues/32
+        }
+
+        private static IFileLocator CreateFileLocator(string directory)
+        {
+            return new FileLocator(directory);
+        }
+
+        private static string CreateEmptyFile(string targetDirectory, string extension)
+        {
+            var path = CreateRandomFilePath(targetDirectory, extension);
+            CreateEmptyFile(path);
+            return path;
+        }
+
+        private static void CreateEmptyFile(string path)
+        {
+            File.WriteAllBytes(path, new byte[0]);
+        }
+
+        private static string CreateRandomFilePath(string targetDirectory, string extension)
+        {
+            return Path.Combine(targetDirectory, Path.ChangeExtension(Path.GetRandomFileName(), extension));
         }
     }
 }
