@@ -70,6 +70,20 @@ namespace playNET.Tests
             //todo: wait for reply on https://github.com/plioi/fixie/issues/32
         }
 
+        public void FileLocator_Always_IgnoresNonMp3Files()
+        {
+            var pathToMp3 = CreateRandomFilePath(targetDirectory, ".xyz");
+            var sut = CreateFileLocator(targetDirectory);
+            var signal = new ManualResetEventSlim();
+            sut.TrackAdded += (sender, args) => signal.Set();
+
+            CreateEmptyFile(pathToMp3);
+
+            signal.Wait(500);
+            signal.IsSet.ShouldBe(false);
+            //todo: wait for reply on https://github.com/plioi/fixie/issues/32
+        }
+
         private static IFileLocator CreateFileLocator(string directory)
         {
             return new FileLocator(directory);

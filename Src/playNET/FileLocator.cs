@@ -10,7 +10,7 @@ namespace playNET
 
         public FileLocator(string directory)
         {
-            watcher = new FileSystemWatcher(directory) {EnableRaisingEvents = true};
+            watcher = new FileSystemWatcher(directory, "*.mp3") {EnableRaisingEvents = true};
         }
 
         public IEnumerable<string> FindTracks()
