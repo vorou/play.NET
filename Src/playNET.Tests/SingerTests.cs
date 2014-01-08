@@ -6,15 +6,6 @@ namespace playNET.Tests
     public class SingerTests
     {
         private const string AudioDir = @"..\..\..\..\Audio";
-        private const string TestTrackFileName = "vot-tak-vot.mp3";
-        private const string TestTrackFileNameWithoutExtension = "vot-tak-vot";
-        private string TestTrack
-        {
-            get
-            {
-                return Path.Combine(AudioDir, TestTrackFileName);
-            }
-        }
 
         public void NowPlaying_PlaylistEmpty_ReturnsNull()
         {
@@ -29,7 +20,7 @@ namespace playNET.Tests
         public void NowPlaying_PlaylistHasTracksPlayerStopped_ReturnsNull()
         {
             var sut = CreateSinger();
-            sut.Queue(TestTrack);
+            sut.Queue(Path.Combine(AudioDir, "vot-tak-vot.mp3"));
 
             var actual = sut.NowPlaying;
 
@@ -49,9 +40,9 @@ namespace playNET.Tests
         {
             var sut = CreateSinger();
 
-            sut.Queue(TestTrack);
+            sut.Queue(Path.Combine(AudioDir, "vot-tak-vot.mp3"));
 
-            sut.Playlist.ShouldContain(TestTrackFileNameWithoutExtension);
+            sut.Playlist.ShouldContain("vot-tak-vot");
         }
 
         private static Singer CreateSinger()

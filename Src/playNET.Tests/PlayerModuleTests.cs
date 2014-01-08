@@ -93,6 +93,7 @@ namespace playNET.Tests
 
         [Input("/play")]
         [Input("/stop")]
+        [Input("/next")]
         public void Posts_Always_ReturnsHttpOK(string uri)
         {
             var sut = CreateDefaultBrowser();
@@ -100,6 +101,16 @@ namespace playNET.Tests
             var actual = sut.Post(uri).StatusCode;
 
             actual.ShouldBe(HttpStatusCode.OK);
+        }
+
+        public void PostNext_Always_CallsNextOnPlayer()
+        {
+            var player = fixture.Freeze<IPlayer>();
+            var sut = CreateDefaultBrowser();
+
+            sut.Post("/next");
+
+            A.CallTo(() => player.Next()).MustHaveHappened();
         }
     }
 }

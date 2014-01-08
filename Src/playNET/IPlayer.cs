@@ -9,5 +9,6 @@ namespace playNET
         IEnumerable<string> Playlist { get; }
         void Play();
         void Stop();
+        void Next();
     }
 }

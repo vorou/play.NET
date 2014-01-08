@@ -44,6 +44,11 @@ namespace playNET
             singer.ShutUp();
         }
 
+        public void Next()
+        {
+            singer.Next();
+        }
+
         public void Play()
         {
             singer.Sing();

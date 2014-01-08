@@ -54,5 +54,10 @@ namespace playNET
         {
             wmp.controls.play();
         }
+
+        public void Next()
+        {
+            wmp.controls.next();
+        }
     }
 }

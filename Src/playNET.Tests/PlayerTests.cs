@@ -93,5 +93,15 @@ namespace playNET.Tests
 
             A.CallTo(() => singer.Queue(track)).MustHaveHappened();
         }
+
+        public void Next_Always_TellsSingerToPlayNext()
+        {
+            var singer = fixture.Freeze<ISinger>();
+            var sut = fixture.Create<Player>();
+
+            sut.Next();
+
+            A.CallTo(() => singer.Next()).MustHaveHappened();
+        }
     }
 }

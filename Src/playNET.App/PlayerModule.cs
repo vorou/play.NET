@@ -21,6 +21,12 @@ namespace playNET.App
                                 player.Stop();
                                 return HttpStatusCode.OK;
                             };
+
+            Post["/next"] = _ =>
+                            {
+                                player.Next();
+                                return HttpStatusCode.OK;
+                            };
         }
     }
 }
