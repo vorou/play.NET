@@ -11,7 +11,7 @@ namespace playNET.App
             base.ConfigureApplicationContainer(container);
             container.Register<Player>().AsSingleton();
             container.Register<Singer>().AsSingleton();
-            container.Register(new FileLocator(Path.GetTempPath())).AsSingleton();
+            container.Register((c, o) => new FileLocator(Path.GetTempPath())).AsSingleton();
         }
     }
 }
