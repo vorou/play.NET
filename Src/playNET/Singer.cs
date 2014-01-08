@@ -50,5 +50,9 @@ namespace playNET
                 return currentMedia.getItemInfo("Title");
             }
         }
+
+        public void Queue(string track)
+        {
+        }
     }
 }

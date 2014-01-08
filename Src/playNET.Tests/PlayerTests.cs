@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using FakeItEasy;
 using playNET.Tests.Helpers;
 using Ploeh.AutoFixture;
@@ -82,6 +83,20 @@ namespace playNET.Tests
             var actual = sut.Playlist;
 
             actual.ShouldContain("panda");
+        }
+
+        public void Player_TrackAdded_ShouldQueueIt()
+        {
+            var dir = @"a:\";
+            var filename = "b";
+            var fileLocator = fixture.Freeze<IFileLocator>();
+            var singer = fixture.Freeze<ISinger>();
+            var sut = fixture.Create<Player>();
+
+            fileLocator.TrackAdded += Raise.With(new FileSystemEventArgs(WatcherChangeTypes.Created, dir, filename)).Now;
+
+            var expected = @"a:\b";
+            A.CallTo(() => singer.Queue(expected)).MustHaveHappened();
         }
     }
 }

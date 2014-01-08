@@ -19,5 +19,7 @@ namespace playNET
         {
             return Directory.GetFiles(directory, "*.mp3");
         }
+
+        public event FileSystemEventHandler TrackAdded;
     }
 }

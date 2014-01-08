@@ -12,7 +12,13 @@ namespace playNET
         public Player(IFileLocator fileLocator, ISinger singer)
         {
             this.fileLocator = fileLocator;
+            fileLocator.TrackAdded += FileLocatorOnTrackAdded;
             this.singer = singer;
+        }
+
+        private void FileLocatorOnTrackAdded(object sender, FileSystemEventArgs file)
+        {
+            singer.Queue(file.FullPath);
         }
 
         public IEnumerable<string> Playlist
