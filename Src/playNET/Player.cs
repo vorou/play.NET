@@ -41,7 +41,7 @@ namespace playNET
 
         public void Stop()
         {
-            singer.ShutUp();
+            singer.Stop();
         }
 
         public void Next()
@@ -51,7 +51,7 @@ namespace playNET
 
         public void Play()
         {
-            singer.Sing();
+            singer.Play();
         }
 
         private void FileLocatorOnTrackAdded(object sender, FileSystemEventArgs file)

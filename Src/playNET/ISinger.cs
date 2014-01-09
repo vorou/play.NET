@@ -4,11 +4,11 @@ namespace playNET
 {
     public interface ISinger
     {
-        void ShutUp();
+        void Stop();
         string NowPlaying { get; }
         IEnumerable<string> Playlist { get; }
         void Queue(string track);
-        void Sing();
+        void Play();
         void Next();
     }
 }

@@ -31,7 +31,7 @@ namespace playNET.Tests
 
             sut.Play();
 
-            A.CallTo(() => singer.Sing()).MustHaveHappened();
+            A.CallTo(() => singer.Play()).MustHaveHappened();
         }
 
         public void Stop_Always_StopsPlayback()
@@ -41,7 +41,7 @@ namespace playNET.Tests
 
             sut.Stop();
 
-            A.CallTo(() => singer.ShutUp()).MustHaveHappened();
+            A.CallTo(() => singer.Stop()).MustHaveHappened();
         }
 
         public void NowPlaying_Always_AsksSingerWhatIsPlaying()

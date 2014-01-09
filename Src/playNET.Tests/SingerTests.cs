@@ -10,7 +10,7 @@ namespace playNET.Tests
         public void NowPlaying_PlaylistEmpty_ReturnsNull()
         {
             var sut = CreateSinger();
-            sut.ShutUp();
+            sut.Stop();
 
             var actual = sut.NowPlaying;
 

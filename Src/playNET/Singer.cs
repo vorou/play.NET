@@ -16,7 +16,7 @@ namespace playNET
             wmp = new WindowsMediaPlayer();
         }
 
-        public void ShutUp()
+        public void Stop()
         {
             wmp.controls.stop();
         }
@@ -50,7 +50,7 @@ namespace playNET
             wmp.currentPlaylist.appendItem(wmp.newMedia(Path.GetFullPath(track)));
         }
 
-        public void Sing()
+        public void Play()
         {
             wmp.controls.play();
         }
