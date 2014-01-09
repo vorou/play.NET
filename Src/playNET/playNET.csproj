@@ -40,13 +40,11 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPlayer.cs" />
     <Compile Include="IFileLocator.cs" />
-    <Compile Include="ISinger.cs" />
+    <Compile Include="IPlayer.cs" />
     <Compile Include="PlaybackStatus.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="FileLocator.cs" />
-    <Compile Include="Singer.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="stdole">

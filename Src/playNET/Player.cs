@@ -1,54 +1,68 @@
 using System.Collections.Generic;
 using System.IO;
+using WMPLib;
 
 namespace playNET
 {
     public class Player : IPlayer
     {
-        private readonly ISinger singer;
+        private readonly WindowsMediaPlayer wmp;
 
-        public Player(IFileLocator fileLocator, ISinger singer)
+        public Player(IFileLocator fileLocator)
         {
+            wmp = new WindowsMediaPlayer();
             fileLocator.TrackAdded += FileLocatorOnTrackAdded;
-            this.singer = singer;
             foreach (var track in fileLocator.FindTracks())
-                singer.Queue(track);
+                Queue(track);
         }
 
-        public IEnumerable<string> Playlist
+        public void Stop()
         {
-            get
-            {
-                return singer.Playlist;
-            }
+            wmp.controls.stop();
         }
 
         public string NowPlaying
         {
             get
             {
-                return singer.NowPlaying;
+                if (wmp.playState != WMPPlayState.wmppsPlaying)
+                    return null;
+
+                var currentMedia = wmp.currentMedia;
+                if (currentMedia == null)
+                    return null;
+
+                return currentMedia.getItemInfo("Title");
             }
         }
 
-        public void Stop()
+        public IEnumerable<string> Playlist
         {
-            singer.Stop();
+            get
+            {
+                for (var i = 0; i < wmp.currentPlaylist.count; i++)
+                    yield return wmp.currentPlaylist.Item[i].name;
+            }
         }
 
-        public void Next()
+        public void Queue(string track)
         {
-            singer.Next();
+            wmp.currentPlaylist.appendItem(wmp.newMedia(Path.GetFullPath(track)));
         }
 
         public void Play()
         {
-            singer.Play();
+            wmp.controls.play();
+        }
+
+        public void Next()
+        {
+            wmp.controls.next();
         }
 
         private void FileLocatorOnTrackAdded(object sender, FileSystemEventArgs file)
         {
-            singer.Queue(file.FullPath);
+            Queue(file.FullPath);
         }
     }
 }
