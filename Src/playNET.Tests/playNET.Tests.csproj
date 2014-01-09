@@ -72,7 +72,7 @@
     <Compile Include="Helpers\TestConvention.cs" />
     <Compile Include="PlayerModuleTests.cs" />
     <Compile Include="FileLocatorTests.cs" />
-    <Compile Include="PlayerIntegrationTests.cs" />
+    <Compile Include="PlayerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\playNET.App\playNET.App.csproj">

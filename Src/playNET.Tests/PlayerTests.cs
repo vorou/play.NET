@@ -7,7 +7,7 @@ using Shouldly;
 
 namespace playNET.Tests
 {
-    public class PlayerIntegrationTests
+    public class PlayerTests
     {
         private const string TestDir = @"..\..\..\..\Audio";
         private const string TrackName = "vot-tak-vot";
