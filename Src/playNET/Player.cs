@@ -45,7 +45,7 @@ namespace playNET
             }
         }
 
-        public void Queue(string track)
+        private void Queue(string track)
         {
             wmp.currentPlaylist.appendItem(wmp.newMedia(Path.GetFullPath(track)));
         }

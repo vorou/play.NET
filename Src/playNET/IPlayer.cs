@@ -6,7 +6,6 @@ namespace playNET
     {
         string NowPlaying { get; }
         IEnumerable<string> Playlist { get; }
-        void Queue(string track);
         void Play();
         void Stop();
         void Next();
