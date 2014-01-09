@@ -8,8 +8,6 @@ namespace playNET.App
         {
             Get["/"] = _ => View["Index", new IndexViewModel {NowPlaying = player.NowPlaying, Playlist = player.Playlist}];
 
-            Get["/status"] = _ => player.Status.ToString();
-
             Post["/play"] = _ =>
                             {
                                 player.Play();

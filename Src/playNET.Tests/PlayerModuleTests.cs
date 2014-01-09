@@ -35,7 +35,6 @@ namespace playNET.Tests
         public void GetRoot_Always_ContainsTrackName()
         {
             var player = fixture.Freeze<IPlayer>();
-            A.CallTo(() => player.Status).Returns(PlaybackStatus.Playing);
             var trackName = "panda rap";
             A.CallTo(() => player.NowPlaying).Returns(trackName);
             var sut = CreateDefaultBrowser();
@@ -43,19 +42,6 @@ namespace playNET.Tests
             var actual = sut.Get("/").Body.AsString();
 
             actual.ShouldContain(trackName);
-        }
-
-        [Input(PlaybackStatus.Playing, "Playing")]
-        [Input(PlaybackStatus.Stopped, "Stopped")]
-        public void GetStatus_Always_RespondsWithPlaybackStatus(PlaybackStatus status, string expected)
-        {
-            var player = fixture.Freeze<IPlayer>();
-            A.CallTo(() => player.Status).Returns(status);
-            var sut = CreateDefaultBrowser();
-
-            var actual = sut.Get("/status").Body.AsString();
-
-            actual.ShouldBe(expected);
         }
 
         public void GetRoot_Always_ContainsPlaylist()

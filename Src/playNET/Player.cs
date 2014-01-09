@@ -31,14 +31,6 @@ namespace playNET
             }
         }
 
-        public PlaybackStatus Status
-        {
-            get
-            {
-                return singer.NowPlaying == null ? PlaybackStatus.Stopped : PlaybackStatus.Playing;
-            }
-        }
-
         public void Stop()
         {
             singer.Stop();

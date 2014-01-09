@@ -11,19 +11,6 @@ namespace playNET.Tests
     {
         private readonly IFixture fixture = new Fixture().Customize(new AutoFakeItEasyCustomization());
 
-        [Input("panda", PlaybackStatus.Playing)]
-        [Input(null, PlaybackStatus.Stopped)]
-        public void Status_Always_CalculatedFromNowPlaying(string nowPlaying, PlaybackStatus expected)
-        {
-            var singer = fixture.Freeze<ISinger>();
-            var sut = fixture.Create<Player>();
-            A.CallTo(() => singer.NowPlaying).Returns(nowPlaying);
-
-            var actual = sut.Status;
-
-            actual.ShouldBe(expected);
-        }
-
         public void Play_Always_TurnsOnSinger()
         {
             var singer = fixture.Freeze<ISinger>();
