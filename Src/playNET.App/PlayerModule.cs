@@ -33,10 +33,12 @@ namespace playNET.App
                                };
 
             Post["/volup"] = _ =>
-                               {
-                                   player.VolumeUp();
-                                   return HttpStatusCode.OK;
-                               };
+                             {
+                                 player.VolumeUp();
+                                 return HttpStatusCode.OK;
+                             };
+
+            Get["/now"] = _ => player.NowPlaying;
         }
     }
 }

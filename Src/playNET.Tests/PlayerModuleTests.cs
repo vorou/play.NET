@@ -119,5 +119,16 @@ namespace playNET.Tests
 
             A.CallTo(() => player.VolumeUp()).MustHaveHappened();
         }
+
+        public void GetNowPlaying_Always_ReturnsNameFromPlayer()
+        {
+            var player = fixture.Freeze<IPlayer>();
+            A.CallTo(() => player.NowPlaying).Returns("panda");
+            var sut = CreateDefaultBrowser();
+
+            var actual = sut.Get("/now");
+
+            actual.Body.AsString().ShouldBe("panda");
+        }
     }
 }

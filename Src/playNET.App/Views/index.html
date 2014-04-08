@@ -19,13 +19,13 @@
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <p class="navbar-brand">playNET</p>
+                    <p><span class="navbar-brand">playNET</span><span class="navbar-text">(lib is at \\guilty\music)</span></p>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="starter-template">
-                <h1>@Model.NowPlaying</h1>
+                <h1 id="now-playing">@Model.NowPlaying</h1>
                 <p class="lead">now playing</p>
                 <div class="playback-controls">
                     <div class="btn-group">
@@ -49,24 +49,33 @@
         </div><!-- /.container -->
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script>
-            $(function () {
+            function doPoll() {
+                $.get('now', function(data) {
+                    $("#now-playing").text(data);
+                    setTimeout(doPoll, 1000);
+                });
+            }
+
+            $(function() {
                 var controls = $('.playback-controls');
 //                todo: foreach button post its id (data-action or some other shit)
-                controls.on('click', "#play", function () {
+                controls.on('click', "#play", function() {
                     $.post("play");
                 });
-                controls.on('click', "#stop", function () {
+                controls.on('click', "#stop", function() {
                     $.post("stop");
                 });
-                controls.on('click', "#next", function () {
+                controls.on('click', "#next", function() {
                     $.post("next");
                 });
-                controls.on('click', "#volup", function () {
+                controls.on('click', "#volup", function() {
                     $.post("volup");
                 });
-                controls.on('click', "#voldown", function () {
+                controls.on('click', "#voldown", function() {
                     $.post("voldown");
                 });
+
+                doPoll();
             });
         </script>
         <script src="../Content/js/bootstrap.min.js"></script>
