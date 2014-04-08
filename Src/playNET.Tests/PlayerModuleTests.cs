@@ -109,5 +109,15 @@ namespace playNET.Tests
 
             A.CallTo(() => player.VolumeDown()).MustHaveHappened();
         }
+
+        public void PostVolup_Always_CallsVolumeUpOnPlayer()
+        {
+            var player = fixture.Freeze<IPlayer>();
+            var sut = CreateDefaultBrowser();
+
+            sut.Post("/volup");
+
+            A.CallTo(() => player.VolumeUp()).MustHaveHappened();
+        }
     }
 }

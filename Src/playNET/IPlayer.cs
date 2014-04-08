@@ -10,5 +10,6 @@ namespace playNET
         void Stop();
         void Next();
         void VolumeDown();
+        void VolumeUp();
     }
 }
