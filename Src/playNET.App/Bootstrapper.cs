@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Configuration;
+using System.IO;
 using Nancy;
 using Nancy.TinyIoc;
 
@@ -10,7 +11,7 @@ namespace playNET.App
         {
             base.ConfigureApplicationContainer(container);
             container.Register<Player>().AsSingleton();
-            container.Register<IFileLocator>(new FileLocator(Path.GetTempPath()));
+            container.Register<IFileLocator>(new FileLocator(ConfigurationManager.AppSettings["mediapath"] ?? Path.GetTempPath()));
         }
     }
 }

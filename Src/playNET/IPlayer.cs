@@ -9,5 +9,6 @@ namespace playNET
         void Play();
         void Stop();
         void Next();
+        void VolumeDown();
     }
 }

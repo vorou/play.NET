@@ -80,6 +80,7 @@ namespace playNET.Tests
         [Input("/play")]
         [Input("/stop")]
         [Input("/next")]
+        [Input("/voldown")]
         public void Posts_Always_ReturnsHttpOK(string uri)
         {
             var sut = CreateDefaultBrowser();
@@ -97,6 +98,16 @@ namespace playNET.Tests
             sut.Post("/next");
 
             A.CallTo(() => player.Next()).MustHaveHappened();
+        }
+
+        public void PostVoldown_Always_CallsVolumeDownOnPlayer()
+        {
+            var player = fixture.Freeze<IPlayer>();
+            var sut = CreateDefaultBrowser();
+
+            sut.Post("/voldown");
+
+            A.CallTo(() => player.VolumeDown()).MustHaveHappened();
         }
     }
 }
