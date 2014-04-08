@@ -70,6 +70,11 @@ namespace playNET
             wmp.settings.volume += 10;
         }
 
+        public void Previous()
+        {
+            wmp.controls.previous();
+        }
+
         private void FileLocatorOnTrackAdded(object sender, FileSystemEventArgs file)
         {
             Queue(file.FullPath);

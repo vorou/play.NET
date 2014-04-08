@@ -26,6 +26,12 @@ namespace playNET.App
                                 return HttpStatusCode.OK;
                             };
 
+            Post["/prev"] = _ =>
+                            {
+                                player.Previous();
+                                return HttpStatusCode.OK;
+                            };
+
             Post["/voldown"] = _ =>
                                {
                                    player.VolumeDown();

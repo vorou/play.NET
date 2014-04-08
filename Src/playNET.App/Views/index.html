@@ -37,6 +37,7 @@
                         <button type="button" class="btn btn-default" id="voldown"><span class="glyphicon glyphicon-minus"></span></button>
                     </div>
                     <div class="btn-group">
+                        <button type="button" class="btn btn-default" id="prev"><span class="glyphicon glyphicon-fast-backward"></span></button>
                         <button type="button" class="btn btn-default" id="next"><span class="glyphicon glyphicon-fast-forward"></span></button>
                     </div>
                 </div>
@@ -67,6 +68,9 @@
                 });
                 controls.on('click', "#next", function() {
                     $.post("next");
+                });
+                controls.on('click', "#prev", function () {
+                    $.post("prev");
                 });
                 controls.on('click', "#volup", function() {
                     $.post("volup");

@@ -100,6 +100,16 @@ namespace playNET.Tests
             A.CallTo(() => player.Next()).MustHaveHappened();
         }
 
+        public void PostPrev_Always_CallsPreviousOnPlayer()
+        {
+            var player = fixture.Freeze<IPlayer>();
+            var sut = CreateDefaultBrowser();
+
+            sut.Post("/prev");
+
+            A.CallTo(() => player.Previous()).MustHaveHappened();
+        }
+
         public void PostVoldown_Always_CallsVolumeDownOnPlayer()
         {
             var player = fixture.Freeze<IPlayer>();
