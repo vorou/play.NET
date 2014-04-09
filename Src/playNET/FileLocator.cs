@@ -9,12 +9,12 @@ namespace playNET
 
         public FileLocator(string directory)
         {
-            watcher = new FileSystemWatcher(directory, "*.mp3") {EnableRaisingEvents = true};
+            watcher = new FileSystemWatcher(directory, "*.mp3") {EnableRaisingEvents = true, IncludeSubdirectories = true};
         }
 
         public IEnumerable<string> FindTracks()
         {
-            var tracks = Directory.GetFiles(watcher.Path, "*.mp3");
+            var tracks = Directory.GetFiles(watcher.Path, "*.mp3", SearchOption.AllDirectories);
             return tracks;
         }
 

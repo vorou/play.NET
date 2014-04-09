@@ -65,7 +65,29 @@ namespace playNET.Tests
             CreateEmptyFile(pathToMp3);
 
             signal.Wait(500);
-            if(!signal.IsSet)
+            if (!signal.IsSet)
+                throw new Exception("Timeout");
+            //todo: wait for reply on https://github.com/plioi/fixie/issues/32
+        }
+
+        public void FileLocator_NewMp3CreatedInSubDir_RaisesNewTrack()
+        {
+            var subDirPath = Path.Combine(targetDirectory, Path.GetRandomFileName());
+            Directory.CreateDirectory(subDirPath);
+            var targetMp3 = Path.Combine(subDirPath, "panda.mp3");
+
+            var sut = CreateFileLocator(targetDirectory);
+            var signal = new ManualResetEventSlim();
+            sut.TrackAdded += (sender, args) =>
+            {
+                args.FullPath.ShouldBe(targetMp3);
+                signal.Set();
+            };
+
+            CreateEmptyFile(targetMp3);
+
+            signal.Wait(500);
+            if (!signal.IsSet)
                 throw new Exception("Timeout");
             //todo: wait for reply on https://github.com/plioi/fixie/issues/32
         }
@@ -82,6 +104,19 @@ namespace playNET.Tests
             signal.Wait(500);
             signal.IsSet.ShouldBe(false);
             //todo: wait for reply on https://github.com/plioi/fixie/issues/32
+        }
+
+        public void FindTracks_Mp3InSubDir_ShouldFindIt()
+        {
+            var subDirPath = Path.Combine(targetDirectory, Path.GetRandomFileName());
+            Directory.CreateDirectory(subDirPath);
+            var targetMp3 = Path.Combine(subDirPath, "panda.mp3");
+            CreateEmptyFile(targetMp3);
+            var sut = CreateFileLocator(targetDirectory);
+
+            var actual = sut.FindTracks();
+
+            actual.ShouldContain(targetMp3);
         }
 
         private static IFileLocator CreateFileLocator(string directory)
