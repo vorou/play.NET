@@ -6,6 +6,7 @@ namespace playNET
 {
     public class Player : IPlayer
     {
+        private const int VolumeStep = 2;
         private readonly WindowsMediaPlayer wmp;
 
         public Player(IFileLocator fileLocator)
@@ -62,12 +63,12 @@ namespace playNET
 
         public void VolumeDown()
         {
-            wmp.settings.volume -= 10;
+            wmp.settings.volume -= VolumeStep;
         }
 
         public void VolumeUp()
         {
-            wmp.settings.volume += 10;
+            wmp.settings.volume += VolumeStep;
         }
 
         public void Previous()
